@@ -3,6 +3,10 @@ const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
 //
+// New functions pulled in
+const { loadFilesSync } = require("@graphql-tools/load-files");
+const { makeExecutableSchema } = require("@graphql-tools/schema");
+const { ApolloServer } = require("apollo-server-express");
 //
 const { api } = require("./routes/api");
 //
