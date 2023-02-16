@@ -1,6 +1,6 @@
 type Query {
   books: [Book]
-  booksByRating(min: Float!): [Book]
+  booksByRating(minRating: Int!): [Book]
 }
 
 type Book {

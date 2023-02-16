@@ -5,14 +5,17 @@ async function getAllBooks() {
   return await books.find(
     {},
     {
-      //   _id: 0,
+      _id: 0,
       __v: 0,
     }
   );
 }
 //
 //
-async function getBooksByRating() {}
+async function getBooksByRating(minRating) {
+  const allBooks = await getAllBooks();
+  return allBooks.filter((book) => Number(book.rating) >= Number(minRating));
+}
 //
 //
 //
