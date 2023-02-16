@@ -1,6 +1,11 @@
 const http = require("http");
 require("dotenv").config();
+const path = require("path");
 //
+// New functions pulled in
+const { loadFilesSync } = require("@graphql-tools/load-files");
+const { makeExecutableSchema } = require("@graphql-tools/schema");
+const { ApolloServer } = require("apollo-server-express");
 //
 const PORT = process.env.PORT;
 const { mongoConnect } = require("./services/mongo");
@@ -13,7 +18,7 @@ const typesArray = loadFilesSync("**/*", {
 //
 //
 //
-// const app = require("./app");
+
 //
 //
 //
@@ -33,7 +38,10 @@ const typesArray = loadFilesSync("**/*", {
 // NEW APPROACH TO SERVER USING GRAPHQL AND APOLLO ****************
 //
 async function startApolloServer() {
-  const app = express();
+  // imported about.. contains its own middleware
+  // const app = express();
+  // this needs to be
+  const app = require("./app");
 
   // this makeExecutableSchema is replacing the buildSchema function we used earlier to set the schema
   const schema = makeExecutableSchema({
