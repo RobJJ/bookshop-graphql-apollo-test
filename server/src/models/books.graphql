@@ -1,8 +1,11 @@
 type Query {
   books: [Book]
+  booksByRating(min: Float!): [Book]
 }
 
 type Book {
+  inStock: Boolean
+  id: ID
   name: String!
   author: String!
   rating: String!

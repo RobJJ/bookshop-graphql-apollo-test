@@ -6,5 +6,8 @@ module.exports = {
     books: () => {
       return booksModel.getAllBooks();
     },
+    booksByRating: () => {
+      //
+    },
   },
 };
