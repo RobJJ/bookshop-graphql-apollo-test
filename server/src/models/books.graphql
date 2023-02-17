@@ -10,7 +10,7 @@ type Mutation {
 
 type Book {
   inStock: Boolean
-  id: ID
+  bookId: ID
   name: String!
   author: String!
   rating: String!

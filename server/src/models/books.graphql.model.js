@@ -44,7 +44,8 @@ async function deleteBookWithId(bookId) {
   // this method return deleted obj
   const deletedBook = await books.findOneAndDelete({ bookId: bookId });
   // truthy check
-  return deletedBook.bookId === bookId;
+  // return deletedBook.bookId === bookId;
+  return deletedBook;
 }
 //
 //
