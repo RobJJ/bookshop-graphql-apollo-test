@@ -17,5 +17,8 @@ module.exports = {
     deleteBookWithId: (_, args) => {
       return booksModel.deleteBookWithId(args.bookId);
     },
+    editBookWithId: (_, args) => {
+      return booksModel.editBookWithId(args.bookId, args.book);
+    },
   },
 };

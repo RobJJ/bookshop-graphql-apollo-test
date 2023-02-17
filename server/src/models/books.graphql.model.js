@@ -49,6 +49,22 @@ async function deleteBookWithId(bookId) {
 }
 //
 //
+async function editBookWithId(bookId, book) {
+  let foundBook = await books.findOne({
+    bookId: bookId,
+  });
+  foundBook = { ...book };
+  const updatedBook = await books.updateOne(
+    { bookId: bookId },
+    { $set: foundBook }
+  );
+  // return meta data from mongoose
+  // return updatedBook.modifiedCount === 1;
+  // return the updatedBook instead here for graphQl
+  return foundBook;
+}
+//
+//
 //
 //
 module.exports = {
@@ -57,4 +73,5 @@ module.exports = {
   addNewBook,
   deleteBookWithId,
   deleteBookWithId,
+  editBookWithId,
 };
