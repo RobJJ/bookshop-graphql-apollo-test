@@ -40,10 +40,20 @@ async function addNewBook(name, author, rating) {
 }
 //
 //
+async function deleteBookWithId(bookId) {
+  // this method return deleted obj
+  const deletedBook = await books.findOneAndDelete({ bookId: bookId });
+  // truthy check
+  return deletedBook.bookId === bookId;
+}
+//
+//
 //
 //
 module.exports = {
   getAllBooks,
   getBooksByRating,
   addNewBook,
+  deleteBookWithId,
+  deleteBookWithId,
 };
