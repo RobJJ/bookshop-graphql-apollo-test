@@ -1,4 +1,5 @@
 const books = require("./books.mongo");
+const { v4: uuidv4 } = require("uuid");
 //
 // get all the books from the DB
 async function getAllBooks() {
@@ -35,6 +36,7 @@ async function addNewBook(name, author, rating) {
   );
 
   await saveBook(newBook);
+  return newBook;
 }
 //
 //
