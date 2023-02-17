@@ -3,6 +3,10 @@ type Query {
   booksByRating(minRating: Int!): [Book]
 }
 
+type Mutation {
+  addNewBook(name: String!, author: String!, rating: String!): Book
+}
+
 type Book {
   inStock: Boolean
   id: ID
