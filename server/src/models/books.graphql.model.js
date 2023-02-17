@@ -18,9 +18,30 @@ async function getBooksByRating(minRating) {
 }
 //
 //
+async function saveBook(newbook) {
+  await books.findOneAndUpdate({ name: newbook.name }, newbook, {
+    upsert: true,
+  });
+}
+//
+//
+async function addNewBook(name, author, rating) {
+  const newBook = Object.assign(
+    { name, author, rating },
+    {
+      inStock: true,
+      bookId: uuidv4(),
+    }
+  );
+
+  await saveBook(newBook);
+}
+//
+//
 //
 //
 module.exports = {
   getAllBooks,
   getBooksByRating,
+  addNewBook,
 };
