@@ -5,7 +5,7 @@ const MONGO_URL = process.env.MONGO_URL;
 //
 //
 mongoose.connection.once("open", () => {
-  console.log("MongoDB connection approved!");
+  console.log("MongoDB connection approved!".cyan);
 });
 //
 mongoose.connection.on("error", (err) => {

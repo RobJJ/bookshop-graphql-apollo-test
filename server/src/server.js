@@ -1,6 +1,7 @@
 const http = require("http");
 require("dotenv").config();
 const path = require("path");
+const colors = require("colors");
 //
 // New functions pulled in
 const { loadFilesSync } = require("@graphql-tools/load-files");
@@ -65,7 +66,7 @@ async function startApolloServer() {
   });
 
   app.listen(3000, () => {
-    console.log(`Running graphQL apollo server...`);
+    console.log(`Running graphQL apollo server...`.cyan);
   });
 }
 
