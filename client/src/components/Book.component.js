@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { DELETE_BOOK } from "../mutations/book-mutations";
+import { DELETE_BOOK, UPDATE_BOOK } from "../mutations/book-mutations";
 import { GET_BOOKS } from "../queries/book-queries";
 //
 //
 function Book({ book, deleteBook, updateBook, deleteBookCompletely }) {
+  // const bookId = book.bookId;
+  // const { name, author, rating } = book;
+  const [isDisabled, setIsDisabled] = useState(true);
+  // maybe replace the standard destructuring with this
+  const [localBook, setLocalBook] = useState({ ...book });
   //
   // an array of functions you pull in!
   const [deleteBookWithId] = useMutation(DELETE_BOOK, {
@@ -24,15 +29,24 @@ function Book({ book, deleteBook, updateBook, deleteBookCompletely }) {
       });
     },
   });
+  //
+  //
+  const [editBookWithId] = useMutation(UPDATE_BOOK, {
+    variables: {
+      bookId: book.bookId,
+      book: {
+        name: localBook.name,
+        author: localBook.author,
+        rating: localBook.rating,
+      },
+    },
+    refetchQueries: [{ query: GET_BOOKS }],
+  });
   // useEffect(() => {
   //   setLocalBook({ ...book });
   // }, [book]);
   //
-  // const bookId = book.bookId;
-  // const { name, author, rating } = book;
-  const [isDisabled, setIsDisabled] = useState(true);
-  // maybe replace the standard destructuring with this
-  const [localBook, setLocalBook] = useState({ ...book });
+
   // const [bookStateBeforeEdit, setBookStateBeforeEdit] = useState({ ...book });
   //ghffhgfjhgffdhgddhjjfdjhgfjdngf
   function toggleDisable(e) {
@@ -53,11 +67,12 @@ function Book({ book, deleteBook, updateBook, deleteBookCompletely }) {
   }
   //
   function acceptBookEdit() {
-    console.log("Book has been edited!");
+    // console.log("Book has been edited! Localbook is: ", localBook);
     // setBookStateBeforeEdit({ ...localBook });
     // handle the http call here... call the http function with the localBook object that contains the new values to update
     // updateBook(bookId, localBook);
-    // setIsDisabled(!isDisabled);
+    editBookWithId();
+    setIsDisabled(!isDisabled);
   }
   //
   //

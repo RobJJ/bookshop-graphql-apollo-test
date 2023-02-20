@@ -23,5 +23,18 @@ const ADD_NEW_BOOK = gql`
     }
   }
 `;
+//
+//
+const UPDATE_BOOK = gql`
+  mutation editBookWithId($bookId: ID!, $book: BookInput!) {
+    editBookWithId(bookId: $bookId, book: $book) {
+      name
+      author
+      rating
+      bookId
+      inStock
+    }
+  }
+`;
 
-export { DELETE_BOOK, ADD_NEW_BOOK };
+export { DELETE_BOOK, ADD_NEW_BOOK, UPDATE_BOOK };
