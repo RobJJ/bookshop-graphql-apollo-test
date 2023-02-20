@@ -65,7 +65,7 @@ async function startApolloServer() {
     path: "/graphql",
   });
 
-  app.listen(3000, () => {
+  app.listen(PORT, () => {
     console.log(`Running graphQL apollo server...`.cyan);
   });
 }

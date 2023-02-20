@@ -1,14 +1,34 @@
 import React, { useEffect, useState } from "react";
+import { useMutation } from "@apollo/client";
+import { DELETE_BOOK } from "../mutations/book-mutations";
+import { GET_BOOKS } from "../queries/book-queries";
 //
 //
 function Book({ book, deleteBook, updateBook, deleteBookCompletely }) {
-  console.log("Book Component called!! & Book obj is, ", book);
   //
-  useEffect(() => {
-    setLocalBook({ ...book });
-  }, [book]);
+  // an array of functions you pull in!
+  const [deleteBookWithId] = useMutation(DELETE_BOOK, {
+    variables: { id: book.bookId },
+    // array, can call more than one query...once the mutation is hit
+    // refetchQueries: [{ query: GET_BOOKS }],
+    // update func - pass in cache, use the stuff you returned
+    update(cache, { data: { deleteBookWithId } }) {
+      const { books } = cache.readQuery({ query: GET_BOOKS });
+      cache.writeQuery({
+        query: GET_BOOKS,
+        data: {
+          books: books.filter(
+            (book) => book.bookId !== deleteBookWithId.bookId
+          ),
+        },
+      });
+    },
+  });
+  // useEffect(() => {
+  //   setLocalBook({ ...book });
+  // }, [book]);
   //
-  const bookId = book.bookId;
+  // const bookId = book.bookId;
   // const { name, author, rating } = book;
   const [isDisabled, setIsDisabled] = useState(true);
   // maybe replace the standard destructuring with this
@@ -36,8 +56,8 @@ function Book({ book, deleteBook, updateBook, deleteBookCompletely }) {
     console.log("Book has been edited!");
     // setBookStateBeforeEdit({ ...localBook });
     // handle the http call here... call the http function with the localBook object that contains the new values to update
-    updateBook(bookId, localBook);
-    setIsDisabled(!isDisabled);
+    // updateBook(bookId, localBook);
+    // setIsDisabled(!isDisabled);
   }
   //
   //
@@ -76,7 +96,7 @@ function Book({ book, deleteBook, updateBook, deleteBookCompletely }) {
         </div>
         <div
           className="w-1/2 bg-red-200 cursor-pointer"
-          onClick={isDisabled ? deleteBookCompletely : abortBookEdit}
+          onClick={isDisabled ? deleteBookWithId : abortBookEdit}
         >
           {isDisabled ? "Del" : "Cancel"}
         </div>

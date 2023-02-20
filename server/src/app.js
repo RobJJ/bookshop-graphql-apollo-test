@@ -20,21 +20,22 @@ const app = express();
 //     origin: "http://localhost:8000",
 //   })
 // );
+// app.use(cors());
 //
 app.use(morgan("combined"));
 //
 // do I need this then? --- going to dissable and see
 // app.use(express.json());
 // removed this for testing....
-// app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(express.static(path.join(__dirname, "..", "public")));
 //
 // remove this api from the app middleware... apollo/graphql will handle... because we have remove this api router.. all routes will be handled by apollo?
 // app.use("/v1", api);
 //
 // removed this for testing....
-// app.get("/*", (req, res) => {
-// res.sendFile(path.join(__dirname, "..", "public", "index.html"));
-// });
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "public", "index.html"));
+});
 //
 //
 //
