@@ -20,19 +20,19 @@ function AddBook({ books, setBooks, submitBook }) {
       rating: newBook.rating,
     },
     // array, can call more than one query...once the mutation is hit
-    refetchQueries: [{ query: GET_BOOKS }],
+    // refetchQueries: [{ query: GET_BOOKS }],
     // update func - pass in cache, use the stuff you returned
-    // update(cache, { data: { deleteBookWithId } }) {
-    //   const { books } = cache.readQuery({ query: GET_BOOKS });
-    //   cache.writeQuery({
-    //     query: GET_BOOKS,
-    //     data: {
-    //       books: books.filter(
-    //         (book) => book.bookId !== deleteBookWithId.bookId
-    //       ),
-    //     },
-    //   });
-    // },
+    // the {data: {addNewBook}} returns everything you returned from the actual graphql mutation declared
+    update(cache, { data: { addNewBook } }) {
+      const { books } = cache.readQuery({ query: GET_BOOKS });
+      //
+      cache.writeQuery({
+        query: GET_BOOKS,
+        data: {
+          books: [...books, addNewBook],
+        },
+      });
+    },
   });
   //
 
@@ -42,6 +42,14 @@ function AddBook({ books, setBooks, submitBook }) {
       onSubmit={(e) => {
         e.preventDefault();
         // submitBook(e);
+        // could do validation first
+        if (
+          newBook.name === "" ||
+          newBook.author === "" ||
+          newBook.rating === ""
+        ) {
+          return alert("Please fill in all fields");
+        }
         addNewBook();
         setNewBook(newBookTemplate);
       }}

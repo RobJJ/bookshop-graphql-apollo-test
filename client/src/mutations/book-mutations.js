@@ -19,6 +19,7 @@ const ADD_NEW_BOOK = gql`
       author
       rating
       bookId
+      inStock
     }
   }
 `;
